@@ -12,8 +12,12 @@ class Configuration implements ConfigurationInterface
      */
     public function getConfigTreeBuilder()
     {
-        $treeBuilder = new TreeBuilder();
-        $rootNode = $treeBuilder->root('ornicar_gravatar', 'array');
+        $treeBuilder = new TreeBuilder('ornicar_gravatar');
+        if (!method_exists($treeBuilder, 'getRootNode')) {
+	        $rootNode = $treeBuilder->root('ornicar_gravatar', 'array');
+        } else {
+        	$rootNode = $treeBuilder->getRootNode();
+        }
         $rootNode
             ->children()
                 ->scalarNode('size')->defaultValue('80')->end()
